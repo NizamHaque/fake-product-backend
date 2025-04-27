@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fake Logo Detection</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00f5c3;
+      margin-bottom: 10px;
+    }
+
+    .upload-area, .feedback-area, .review-area {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label.upload-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #00f5c3;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    label.upload-btn:hover {
+      background-color: #00bfa5;
+    }
+
+    .result {
+      font-size: 1.2rem;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #00f5c3;
+    }
+
+    img.preview {
+      margin-top: 15px;
+      width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    }
+
+    textarea, input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px 0;
+      resize: none;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #00f5c3;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #00bfa5;
+    }
+
+    .stars {
+      font-size: 1.5rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .stars span {
+      cursor: pointer;
+    }
+
+    .stars span.selected {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fake Product Logo Detector</h1>
+
+  <div class="upload-area">
+    <form method="POST" enctype="multipart/form-data">
+      <label for="image-upload" class="upload-btn">Choose Logo Image</label>
+      <input type="file" id="image-upload" name="image" accept="image/*" required>
+      <br><br>
+      <button class="submit-btn" type="submit">Upload and Predict</button>
+    </form>
+
+    {% if uploaded_image %}
+      <div>
+        <h3>Uploaded Image:</h3>
+        <img src="{{ uploaded_image }}" alt="Uploaded Logo" style="max-width: 250px"; class="preview">
+      </div>
+    {% endif %}
+
+    {% if prediction %}
+      <div class="result">{{ prediction }}</div>
+    {% endif %}
+  </div>
+  
+  <div class="feedback-area">
+    <h2>Feedback</h2>
+    <textarea rows="4" placeholder="Tell us how we can improve..."></textarea><br />
+    <button class="submit-btn">Submit Feedback</button>
+  </div>
+
+  <div class="review-area">
+    <h2>Leave a Review</h2>
+    <form action="/submit_review" method="POST">
+      <div class="stars" id="star-rating">
+        <label><input type="radio" name="stars" value="1"> 1★</label>
+        <label><input type="radio" name="stars" value="2"> 2★</label>
+        <label><input type="radio" name="stars" value="3"> 3★</label>
+        <label><input type="radio" name="stars" value="4"> 4★</label>
+        <label><input type="radio" name="stars" value="5" checked> 5★</label>
+      </div>
+      <input type="text" name="review" placeholder="Write your review..." required>
+      <button class="submit-btn" type="submit">Post Review</button>
+    </form>
+  
+    <h3>Recent Reviews</h3>
+    {% for review in reviews %}
+      <div class="single-review">
+        <strong>{{ review.stars }}★</strong> - {{ review.text }}
+      </div>
+    {% endfor %}
+  </div>
+  
+ 
+<div class="feedback-area">
+  <h2>Contact Developers</h2>
+  <p>Email: <a href="mdnizamhaque13@gmail.com" style="color: #00f5c3;">"almasbabar5@gmail.com</a></p>
+  <p>Email: <a href="mdnizamhaque13@gmail.com" style="color: #00f5c3;">"kshitijjain46@gmail.com</a></p>
+  
+ 
+</div>
+
+
+  <script>
+
+
+    // review logic 
+
+    
+  const stars = document.querySelectorAll('#star-rating span');
+  const starInput = document.getElementById('star-input');
+
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      starInput.value = star.getAttribute('data-value');
+      stars.forEach(s => s.classList.remove('selected'));
+      star.classList.add('selected');
+    });
+  });
+
+    // Star rating logic
+
+
+
+    // const stars = document.querySelectorAll('#star-rating span');
+    // stars.forEach(star => {
+    //   star.addEventListener('click', () => {
+    //     stars.forEach(s => s.classList.remove('selected'));
+    //     let val = parseInt(star.getAttribute('data-value'));
+    //     for (let i = 0; i < val; i++) {
+    //       stars[i].classList.add('selected');
+    //     }
+    //   });
+    // });
+  </script>
+
+</body>
+</html>
+
