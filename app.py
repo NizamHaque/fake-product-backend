@@ -64,12 +64,12 @@ def submit_review():
     return index()
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
 
 # import os
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 1000))  # 1000 is fallback
-    app.run(host='0.0.0.0', port=port, debug=True)
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", 1000))  # 1000 is fallback
+#     app.run(host='0.0.0.0', port=port, debug=True)
 
