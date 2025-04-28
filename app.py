@@ -7,6 +7,7 @@ import os
 import json
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB
 
 model = load_model('model1.h5')
 
